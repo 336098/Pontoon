@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     float health = 50f;
 
-    public GameObject pointCollection;
+    public ShootPointList pointCollection;
     public Transform cabana;
     float moveSpeed = 5f;
     float rotationSpeed = 3f;
@@ -19,6 +19,10 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         DeterminePosition();
+
+        transform.LookAt(closestObj.transform);
+        //lookRotation = Quaternion.LookRotation(closestObj.transform.position);
+        //transform.rotation = lookRotation;
     }
 
     // Update is called once per frame
@@ -61,7 +65,7 @@ public class Enemy : MonoBehaviour
 
     void DeterminePosition()
     {
-        List<GameObject> objectList = pointCollection.GetComponent<ShootPointList>().GetObjectList();
+        List<GameObject> objectList = pointCollection.GetObjectList();
 
         float distance;
         float shortestDistance = Mathf.Infinity;

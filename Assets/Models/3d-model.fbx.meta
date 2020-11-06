@@ -14,7 +14,37 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: sailboat_001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 0011_Seashell
+    second: {fileID: 2100000, guid: 95a6a925afcd41f46a8d7813c3da095a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Color_000
+    second: {fileID: 2100000, guid: 967e8931830069646bc0238d10450148, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_Aluminum_Anodized
+    second: {fileID: 2100000, guid: 1811114bc33ecb045b6e7d5221b8adb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_Rough
+    second: {fileID: 2100000, guid: 5a1caa7fa4038d04abac786a8315a1ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Translucent_Glass_Sky_Reflection
+    second: {fileID: 2100000, guid: b0d8053b3fc92d249a183b627aab26bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_Cherry_Original
+    second: {fileID: 2100000, guid: f4364d9141453f4408e3959e745cb7cc, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

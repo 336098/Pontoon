@@ -16,6 +16,7 @@ public class FirstPersonMovement : MonoBehaviour
     bool isOnGround;
     Vector3 move;
     Vector3 velocity;
+    Vector3 resetPosition = new Vector3(0f, 4f, 0f);
 
     // Start is called before the first frame update
     void Start()
@@ -40,5 +41,16 @@ public class FirstPersonMovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        CheckIfOverboard();
+    }
+
+    void CheckIfOverboard()
+    {
+        if (this.transform.position.y < -10)
+        {
+            this.transform.position = resetPosition;
+            velocity.y = 0f;
+        }
     }
 }
