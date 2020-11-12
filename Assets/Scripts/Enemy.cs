@@ -7,9 +7,15 @@ public class Enemy : MonoBehaviour
     float health = 50f;
 
     public ShootPointList pointCollection;
-    public Transform cabana;
-    float moveSpeed = 5f;
+    public Cabana cabanaScript;
+    public Transform cabanaPosition;
+    public ParticleSystem cannonFlash;
+    public GameController gameMaster;
+    float moveSpeed = 10f;
     float rotationSpeed = 3f;
+    float fireRate = 5f;
+    float nextTimeToFire = 0f;
+    float shootDamage = 5f;
 
     GameObject closestObj;
     Vector3 direction;
@@ -18,11 +24,14 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        pointCollection = GameObject.FindWithTag("ShootPositionCollection").GetComponent<ShootPointList>();
+        cabanaScript = GameObject.FindWithTag("Cabana").GetComponent<Cabana>();
+        cabanaPosition = GameObject.FindWithTag("Cabana").transform;
+        gameMaster = GameObject.FindWithTag("GameMaster").GetComponent<GameController>();
+
         DeterminePosition();
 
         transform.LookAt(closestObj.transform);
-        //lookRotation = Quaternion.LookRotation(closestObj.transform.position);
-        //transform.rotation = lookRotation;
     }
 
     // Update is called once per frame
@@ -33,6 +42,15 @@ public class Enemy : MonoBehaviour
         if (transform.position == closestObj.transform.position)
         {
             LookAtCabana();
+            if (Time.time >= nextTimeToFire)
+            {
+                nextTimeToFire = Time.time + fireRate;
+                cannonFlash.Play();
+
+                //Give damage to the cabana
+                cabanaScript.TakeDamage(shootDamage);
+                Debug.Log("The cabana now has " + cabanaScript.GetHealth() + " health left!");
+            }
         }
     }
 
@@ -48,6 +66,7 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         Destroy(gameObject);
+        gameMaster.enemyList.Remove(this.gameObject);
     }
 
     void MoveToPosition()
@@ -57,7 +76,7 @@ public class Enemy : MonoBehaviour
 
     void LookAtCabana()
     {
-        direction = (cabana.position - transform.position).normalized;
+        direction = (cabanaPosition.position - transform.position).normalized;
         lookRotation = Quaternion.LookRotation(direction);
 
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);

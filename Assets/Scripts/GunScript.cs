@@ -8,6 +8,7 @@ public class GunScript : MonoBehaviour
     public ParticleSystem muzzleFlash;
     public GameObject impactEffect;
     public Animator animator;
+    public GameController gameMaster;
 
     public AudioClip gunShoot;
     public AudioClip gunImpact;
@@ -34,20 +35,24 @@ public class GunScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isReloading)
-            return;
-
-        if (currentAmmo <= 0)
+        //Check if the game is over
+        if (gameMaster.GetGameState() == false)
         {
-            StartCoroutine(Reload());
-            return;
-        }
+            if (isReloading)
+                return;
 
-        if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
-        {
-            nextTimeToFire = Time.time + 1f / fireRate;
-            Shoot();
-            audioPlayer.PlayOneShot(gunShoot);
+            if (currentAmmo <= 0)
+            {
+                StartCoroutine(Reload());
+                return;
+            }
+
+            if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire)
+            {
+                nextTimeToFire = Time.time + 1f / fireRate;
+                Shoot();
+                audioPlayer.PlayOneShot(gunShoot);
+            }
         }
     }
 

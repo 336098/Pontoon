@@ -6,6 +6,7 @@ public class FirstPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform groundCheck;
+    public GameController gameMaster;
 
     float speed = 12;
     float gravity = -9.81f;
@@ -27,22 +28,26 @@ public class FirstPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance);
-        if (isOnGround && velocity.y < 0)
-            velocity.y = -2f;
+        //Check if the game is over
+        if (gameMaster.GetGameState() == false)
+        {
+            isOnGround = Physics.CheckSphere(groundCheck.position, groundDistance);
+            if (isOnGround && velocity.y < 0)
+                velocity.y = -2f;
 
-        x = Input.GetAxis("Horizontal");
-        z = Input.GetAxis("Vertical");
+            x = Input.GetAxis("Horizontal");
+            z = Input.GetAxis("Vertical");
 
-        move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
+            move = transform.right * x + transform.forward * z;
+            controller.Move(move * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && isOnGround)
-            velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+            if (Input.GetButtonDown("Jump") && isOnGround)
+                velocity.y = Mathf.Sqrt(jumpHeight * -2 * gravity);
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
 
-        CheckIfOverboard();
+            CheckIfOverboard();
+        }
     }
 
     void CheckIfOverboard()
