@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    float health = 50f;
+    float maxHealth = 50f;
+    float currentHealth;
+    float currentHealthPercent;
 
     public ShootPointList pointCollection;
     public Cabana cabanaScript;
@@ -17,6 +20,10 @@ public class Enemy : MonoBehaviour
     float nextTimeToFire = 0f;
     float shootDamage = 5f;
 
+    public Camera playerCamera;
+    public Canvas healthCanvas;
+    public Image healthBar;
+
     GameObject closestObj;
     Vector3 direction;
     Quaternion lookRotation;
@@ -24,10 +31,14 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        currentHealthPercent = (float)currentHealth / (float)maxHealth;
+
         pointCollection = GameObject.FindWithTag("ShootPositionCollection").GetComponent<ShootPointList>();
         cabanaScript = GameObject.FindWithTag("Cabana").GetComponent<Cabana>();
         cabanaPosition = GameObject.FindWithTag("Cabana").transform;
         gameMaster = GameObject.FindWithTag("GameMaster").GetComponent<GameController>();
+        playerCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
 
         DeterminePosition();
 
@@ -49,15 +60,19 @@ public class Enemy : MonoBehaviour
 
                 //Give damage to the cabana
                 cabanaScript.TakeDamage(shootDamage);
-                Debug.Log("The cabana now has " + cabanaScript.GetHealth() + " health left!");
             }
         }
+
+        healthBarFacePlayer();
     }
 
     public void TakeDamage(float amount)
     {
-        health -= amount;
-        if (health <= 0)
+        currentHealth -= amount;
+        currentHealthPercent = (float)currentHealth / (float)maxHealth;
+        healthBar.fillAmount = currentHealthPercent;
+
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -98,5 +113,11 @@ public class Enemy : MonoBehaviour
                 closestObj = objectList[i];
             }
         }
+    }
+
+    void healthBarFacePlayer()
+    {
+        healthCanvas.transform.LookAt(playerCamera.transform);
+        healthCanvas.transform.Rotate(0, 180, 0);
     }
 }
