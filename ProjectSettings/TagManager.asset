@@ -7,6 +7,11 @@ TagManager:
   - GameMaster
   - Cabana
   - ShootPositionCollection
+  - Enemy
+  - Battleship
+  - Pirateship
+  - Balloon
+  - BalloonCannonball
   layers:
   - Default
   - TransparentFX

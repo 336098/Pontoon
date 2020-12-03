@@ -78,10 +78,42 @@ public class GunScript : MonoBehaviour
         {
             //Debug.Log(hit.transform.name);
 
-            Enemy target = hit.transform.GetComponent<Enemy>();
-            if (target != null)
+            //Enemy target = hit.transform.GetComponent<Enemy>();
+            //if (target != null)
+            //{
+            //    target.TakeDamage(damage);
+            //}
+            if (hit.transform.tag == "Enemy")
             {
-                target.TakeDamage(damage);
+                Enemy target = hit.transform.GetComponent<Enemy>();
+                if (target != null)
+                {
+                    target.TakeDamage(damage);
+                }
+            }
+            else if (hit.transform.tag == "Battleship")
+            {
+                Battleship target = hit.transform.GetComponent<Battleship>();
+                if (target != null)
+                {
+                    target.TakeDamage(damage);
+                }
+            }
+            else if (hit.transform.tag == "Pirateship")
+            {
+                PirateShip target = hit.transform.GetComponent<PirateShip>();
+                if (target != null)
+                {
+                    target.TakeDamage(damage);
+                }
+            }
+            else if (hit.transform.tag == "Balloon")
+            {
+                Balloon target = hit.transform.GetComponent<Balloon>();
+                if (target != null)
+                {
+                    target.TakeDamage(damage);
+                }
             }
 
             GameObject impactObj = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
