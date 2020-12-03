@@ -73,6 +73,9 @@ public class GameController : MonoBehaviour
             spawnedObj.transform.Translate(new Vector3(distance, 0, distance));
 
             //Reset the Y position for whatever the boat's height in the water will be
+            //Pirateship = -4.53
+            //Battleship = -2.5
+            //Balloon = 33
             spawnedObj.transform.position = new Vector3(spawnedObj.transform.position.x, -2.7f, spawnedObj.transform.position.z);
 
             enemyList.Add(spawnedObj);

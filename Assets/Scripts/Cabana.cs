@@ -25,6 +25,26 @@ public class Cabana : MonoBehaviour
 
     public float GetHealth()
     {
+<<<<<<< Updated upstream
         return health;
+=======
+        return currentHealth;
+    }
+
+    public float GetCabanaPositionX()
+    {
+        return this.transform.position.x;
+    }
+
+    public float GetCabanaPositionZ()
+    {
+        return this.transform.position.z;
+    }
+
+    void healthBarFacePlayer()
+    {
+        healthCanvas.transform.LookAt(playerCamera.transform);
+        healthCanvas.transform.Rotate(0, 180, 0);
+>>>>>>> Stashed changes
     }
 }

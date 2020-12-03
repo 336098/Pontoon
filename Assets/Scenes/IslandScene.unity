@@ -427,7 +427,11 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_Name: pb_Mesh7798
+=======
+  m_Name: pb_Mesh22354
+>>>>>>> Stashed changes
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -838,7 +842,11 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_Name: pb_Mesh7950
+=======
+  m_Name: pb_Mesh22646
+>>>>>>> Stashed changes
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1556,7 +1564,11 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_Name: pb_Mesh7892
+=======
+  m_Name: pb_Mesh22540
+>>>>>>> Stashed changes
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1716,7 +1728,11 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_Name: pb_Mesh7926
+=======
+  m_Name: pb_Mesh22594
+>>>>>>> Stashed changes
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -1880,6 +1896,7 @@ GameObject:
   m_Component:
   - component: {fileID: 772337297}
   - component: {fileID: 772337298}
+  - component: {fileID: 772337299}
   m_Layer: 0
   m_Name: Cabana
   m_TagString: Cabana
@@ -1914,6 +1931,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e79f35bc4c1ce4a4fa64d7eee964e291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
+=======
+  healthCanvas: {fileID: 543545382}
+  playerCamera: {fileID: 534669904}
+  healthBar: {fileID: 669726302}
+--- !u!65 &772337299
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772337296}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14, y: 14, z: 14}
+  m_Center: {x: 0, y: 0, z: 0}
+>>>>>>> Stashed changes
 --- !u!1 &781384284
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,7 +2339,11 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_Name: pb_Mesh8016
+=======
+  m_Name: pb_Mesh22728
+>>>>>>> Stashed changes
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
