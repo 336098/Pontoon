@@ -17,7 +17,7 @@ public class FirstPersonMovement : MonoBehaviour
     bool isOnGround;
     Vector3 move;
     Vector3 velocity;
-    Vector3 resetPosition = new Vector3(0f, 4f, 0f);
+    Vector3 resetPosition = new Vector3(17f, 2f, -13f);
 
     // Start is called before the first frame update
     void Start()
@@ -52,7 +52,7 @@ public class FirstPersonMovement : MonoBehaviour
 
     void CheckIfOverboard()
     {
-        if (this.transform.position.y < -10)
+        if (this.transform.position.y < -5.5)
         {
             this.transform.position = resetPosition;
             velocity.y = 0f;

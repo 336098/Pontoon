@@ -7,22 +7,32 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public Cabana cabanaScript;
+    public GameObject gunScript;
     public Text gameOverText;
+    public Text ammoText;
+    public Text waveText;
+    public Image waterTint;
+
     public GameObject sailboatPrefab;
     public GameObject pirateshipPrefab;
     public GameObject battleshipPrefab;
     public GameObject balloonPrefab;
     public GameObject cabana;
+    public GameObject player;
     bool isGameOver;
 
+    int waveNum;
     int numEnemiesToSpawn = 6;
     float spawnRadius = 250;
     Vector3 cabanaPosition;
     public List<GameObject> enemyList = new List<GameObject>();
+    //Island Y position = -1.25
 
     // Start is called before the first frame update
     void Start()
     {
+        waveNum = 1;
+        waterTint.enabled = false;
         cabanaPosition = cabana.transform.position;
         isGameOver = false;
         gameOverText.text = " ";
@@ -35,10 +45,20 @@ public class GameController : MonoBehaviour
     {
         CheckForGameOver();
 
+        ammoText.text = "Ammo: " + gunScript.GetComponent<GunScript>().currentAmmo.ToString() + " / 10";
+
+        //Tint the camera blue if the player is under the water line
+        if (player.transform.position.y <= -4.1f)
+            waterTint.enabled = true;
+        else
+            waterTint.enabled = false;
+
         //If there are no more enemies left, spawn more
         if (enemyList.Count == 0)
         {
             SpawnSailboats();
+            waveNum++;
+            waveText.text = "Wave " + waveNum;
         }
 
         if (isGameOver == true && Input.GetButtonDown("Jump"))
@@ -95,7 +115,7 @@ public class GameController : MonoBehaviour
                 spawnedObj.transform.position = new Vector3(spawnedObj.transform.position.x, -4.53f, spawnedObj.transform.position.z);
                 enemyList.Add(spawnedObj);
             }
-            else if (spawnRoll <= 90) //20%
+            else if (spawnRoll <= 95) //25%
             {
                 GameObject spawnedObj = (GameObject)Instantiate(balloonPrefab, cabana.transform.position, Quaternion.identity);
                 spawnedObj.transform.Rotate(new Vector3(0, angle, 0));
@@ -105,7 +125,7 @@ public class GameController : MonoBehaviour
                 spawnedObj.transform.position = new Vector3(spawnedObj.transform.position.x, 33f, spawnedObj.transform.position.z);
                 enemyList.Add(spawnedObj);
             }
-            else //10%
+            else //5%
             {
                 GameObject spawnedObj = (GameObject)Instantiate(battleshipPrefab, cabana.transform.position, Quaternion.identity);
                 spawnedObj.transform.Rotate(new Vector3(0, angle, 0));

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Balloon : MonoBehaviour
 {
-    float maxHealth = 130f;
+    float maxHealth = 30f;
     float currentHealth;
     float currentHealthPercent;
 
@@ -18,7 +18,7 @@ public class Balloon : MonoBehaviour
     public Canvas healthCanvas;
     public Image healthBar;
 
-    float moveSpeed = 8f;
+    float moveSpeed = 20f;
     float fireRate = 9f;
     float nextTimeToFire = 0f;
     Vector3 balloonPosition;
