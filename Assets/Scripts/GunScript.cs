@@ -20,8 +20,8 @@ public class GunScript : MonoBehaviour
     float fireRate = 3.5f;
     float nextTimeToFire = 0f;
 
-    int maxAmmo = 10;
-    int currentAmmo;
+    public int maxAmmo = 10;
+    public int currentAmmo;
     float reloadTime = 3.5f;
     bool isReloading = false;
 
@@ -40,6 +40,11 @@ public class GunScript : MonoBehaviour
         {
             if (isReloading)
                 return;
+
+            if (Input.GetKeyUp(KeyCode.R) && currentAmmo != 10)
+            {
+                StartCoroutine(Reload());
+            }
 
             if (currentAmmo <= 0)
             {

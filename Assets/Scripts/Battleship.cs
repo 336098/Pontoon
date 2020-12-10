@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Battleship : MonoBehaviour
 {
-    float maxHealth = 400f;
+    float maxHealth = 200f;
     float currentHealth;
     float currentHealthPercent;
 
@@ -19,7 +19,7 @@ public class Battleship : MonoBehaviour
     public Canvas healthCanvas;
     public Image healthBar;
 
-    float moveSpeed = 2f;
+    float moveSpeed = 5f;
     float rotationSpeed = 3f;
     float fireRate = 12f;
     float nextTimeToFire = 0f;
