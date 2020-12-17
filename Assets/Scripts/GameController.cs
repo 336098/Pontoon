@@ -13,6 +13,10 @@ public class GameController : MonoBehaviour
     public Text waveText;
     public Image waterTint;
 
+    public AudioSource audioPlayer;
+    public AudioClip WaveSound1;
+    public AudioClip WaveSound2;
+
     public GameObject sailboatPrefab;
     public GameObject pirateshipPrefab;
     public GameObject battleshipPrefab;
@@ -31,12 +35,15 @@ public class GameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioPlayer = this.GetComponent<AudioSource>();
+
         waveNum = 1;
         waterTint.enabled = false;
         cabanaPosition = cabana.transform.position;
         isGameOver = false;
         gameOverText.text = " ";
 
+        PlayWaveSound();
         SpawnSailboats();
     }
 
@@ -57,6 +64,7 @@ public class GameController : MonoBehaviour
         if (enemyList.Count == 0)
         {
             SpawnSailboats();
+            PlayWaveSound();
             waveNum++;
             waveText.text = "Wave " + waveNum;
         }
@@ -82,6 +90,19 @@ public class GameController : MonoBehaviour
     public bool GetGameState()
     {
         return isGameOver;
+    }
+
+    void PlayWaveSound()
+    {
+        float randNum = Random.Range(0f, 1f);
+        if (randNum < 0.5f)
+        {
+            audioPlayer.PlayOneShot(WaveSound1);
+        }
+        else
+        {
+            audioPlayer.PlayOneShot(WaveSound2);
+        }
     }
 
     void SpawnSailboats()

@@ -23,9 +23,16 @@ public class Balloon : MonoBehaviour
     float nextTimeToFire = 0f;
     Vector3 balloonPosition;
 
+    public bool isDead = false;
+    public ParticleSystem[] explosionArray;
+    public AudioSource audioPlayer;
+    public AudioClip explosionSound;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioPlayer = this.GetComponent<AudioSource>();
+
         currentHealth = maxHealth;
         currentHealthPercent = (float)currentHealth / (float)maxHealth;
         balloonPosition = new Vector3(13f, 33f, 15f);
@@ -38,9 +45,10 @@ public class Balloon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveToPosition();
+        if (!isDead)
+            MoveToPosition();
 
-        if (transform.position == balloonPosition)
+        if (transform.position == balloonPosition && !isDead)
         {
             if (Time.time >= nextTimeToFire)
             {
@@ -62,13 +70,22 @@ public class Balloon : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            if (!isDead)
+                Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
+        foreach (ParticleSystem explosion in explosionArray)
+        {
+            explosion.Play();
+        }
+        isDead = true;
+        healthCanvas.enabled = false;
+        audioPlayer.PlayOneShot(explosionSound);
+
+        Destroy(gameObject, 3f);
         gameMaster.enemyList.Remove(this.gameObject);
     }
 

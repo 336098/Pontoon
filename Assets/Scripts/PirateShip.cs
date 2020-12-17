@@ -12,7 +12,7 @@ public class PirateShip : MonoBehaviour
     public ShootPointList pointCollection;
     public Cabana cabanaScript;
     public Transform cabanaPosition;
-    //public ParticleSystem cannonFlash;
+    public ParticleSystem cannonFlash;
     public GameController gameMaster;
 
     public Camera playerCamera;
@@ -30,9 +30,17 @@ public class PirateShip : MonoBehaviour
     Quaternion lookRotation;
     Vector3 piratePosition;
 
+    public bool isDead = false;
+    public ParticleSystem[] explosionArray;
+    public AudioSource audioPlayer;
+    public AudioClip shootSound;
+    public AudioClip explosionSound;
+
     // Start is called before the first frame update
     void Start()
     {
+        audioPlayer = this.GetComponent<AudioSource>();
+
         currentHealth = maxHealth;
         currentHealthPercent = (float)currentHealth / (float)maxHealth;
 
@@ -50,15 +58,17 @@ public class PirateShip : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveToPosition();
+        if (!isDead)
+            MoveToPosition();
 
-        if (transform.position == piratePosition)
+        if (transform.position == piratePosition && !isDead)
         {
             LookAtCabana();
             if (Time.time >= nextTimeToFire)
             {
                 nextTimeToFire = Time.time + fireRate;
-                //cannonFlash.Play();
+                cannonFlash.Play();
+                audioPlayer.PlayOneShot(shootSound, 0.5f);
 
                 //Give damage to the cabana
                 cabanaScript.TakeDamage(shootDamage);
@@ -76,13 +86,22 @@ public class PirateShip : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            if (!isDead)
+                Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
+        foreach (ParticleSystem explosion in explosionArray)
+        {
+            explosion.Play();
+        }
+        isDead = true;
+        healthCanvas.enabled = false;
+        audioPlayer.PlayOneShot(explosionSound);
+
+        Destroy(gameObject, 3f);
         gameMaster.enemyList.Remove(this.gameObject);
     }
 

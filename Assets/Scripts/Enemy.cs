@@ -24,6 +24,12 @@ public class Enemy : MonoBehaviour
     public Canvas healthCanvas;
     public Image healthBar;
 
+    public bool isDead = false;
+    public ParticleSystem[] explosionArray;
+    public AudioSource audioPlayer;
+    public AudioClip shootSound;
+    public AudioClip explosionSound;
+
     GameObject closestObj;
     Vector3 direction;
     Quaternion lookRotation;
@@ -31,6 +37,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioPlayer = this.GetComponent<AudioSource>();
+
         currentHealth = maxHealth;
         currentHealthPercent = (float)currentHealth / (float)maxHealth;
 
@@ -48,15 +56,17 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MoveToPosition();
+        if (!isDead)
+            MoveToPosition();
 
         if (transform.position == closestObj.transform.position)
         {
             LookAtCabana();
-            if (Time.time >= nextTimeToFire)
+            if (Time.time >= nextTimeToFire && !isDead)
             {
                 nextTimeToFire = Time.time + fireRate;
                 cannonFlash.Play();
+                audioPlayer.PlayOneShot(shootSound, 0.5f);
 
                 //Give damage to the cabana
                 cabanaScript.TakeDamage(shootDamage);
@@ -74,13 +84,22 @@ public class Enemy : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Die();
+            if (!isDead)
+                Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
+        foreach (ParticleSystem explosion in explosionArray)
+        {
+            explosion.Play();
+        }
+        isDead = true;
+        healthCanvas.enabled = false;
+        audioPlayer.PlayOneShot(explosionSound);
+
+        Destroy(gameObject, 3f);
         gameMaster.enemyList.Remove(this.gameObject);
     }
 
